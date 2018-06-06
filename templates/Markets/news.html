@@ -1,0 +1,205 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>{{ title }}</h1>
+
+<div class="release">
+	<span class="date">11/1/15</span>
+	<span class="release_num">Alpha 0.55</span>
+	<ul class="newfeatures">
+		<li>User account page now shows daily gain and loss metrics with conditional formatting.</li>
+<!-- 		<li></li>
+		<li></li> -->
+	</ul>
+</div>
+
+
+<div class="release">
+	<span class="date">10/30/15</span>
+	<span class="release_num">Alpha 0.54</span>
+	<ul class="newfeatures">
+		<li>Implemented pie chart for stock positions on user account page.</li>
+		<li>Formatting improvements to stock charts.</li>
+	</ul>
+</div>
+
+<div class="release">
+	<span class="date">10/29/15</span>
+	<span class="release_num">Alpha 0.51</span>
+	<ul class="newfeatures">
+		<li>Simple graphs implemented in Python with <a href="http://bokeh.pydata.org" target="_blank">bokeh</a>.</li>
+		<li>Added 'My story' link under 'About' dropdown on navigation menu.</li>
+		<li>Reconfigured the routing to land of stocks page rather than about page on '/'.</li>
+	</ul>
+</div>
+
+<div class="release">
+	<span class="date">10/26/15</span>
+	<span class="release_num">Alpha 0.47</span>
+	<ul class="newfeatures">
+		<li>Implemented a simple framework to perform asynchronous tasks, such as sending emails.</li>
+		<li>Enabled password reminder emails.</li>
+		<li>Password and account management on new account settings page.</li>
+		<li>Updates to styling for the navigation bar, including dropdown menus.</li>
+	</ul>
+</div>
+
+<div class="release">
+	<span class="date">10/25/15</span>
+	<span class="release_num">Alpha 0.44</span>
+	<ul class="newfeatures">
+		<li>Enabled email notification for user registration.</li>
+		<li>Users may now log in using email addresses as well as usernames.</li>
+		<li>User may now search via /stock/(symbol) url without causing server error in cases where the search is invalid or yields no results.</li>
+		<li>Formatting improvements to numbers on user page and dynamic stock pages.</li>
+	</ul>
+</div>
+
+<div class="release">
+	<span class="date">10/20/15</span>
+	<span class="release_num">Alpha 0.42</span>
+	<ul class="newfeatures">
+		<li>Enabled simple caching (currently only for db_view.html "backend" page, perhaps will cache user pages soon, especially after hours.)</li>
+		<li>Reorganized configuration, now based on environment variables and sub-classing of BaseConfiguration class.</li>
+		<!-- <li></li> -->
+	</ul>
+</div>
+
+<div class="release">
+	<span class="date">10/19/15</span>
+	<span class="release_num">Alpha 0.4</span>
+	<ul class="newfeatures">
+		<li>Search for company names now enabled, in addition to stock symbols (company/stock must already exist in stocks table to be indexed.)</li>
+		<li>Now displaying user's current shares and available cash on dynamic stock pages, informing trading decisions.</li>
+		<li>Changes to navigation styling.</li>
+		<li>Wrote and executed helper script to populate the stocks table with thousands of stocks.</li>
+	</ul>
+</div>
+
+<div class="release">
+	<span class="date">10/18/15</span>
+	<span class="release_num">Alpha 0.36</span>
+	<ul class="newfeatures">
+		<li>Added flash message with links to sign in/up for users who aren't signed in.</li>
+		<li>Fixed a bug which caused problems when trying to load the user page immediately after registration.</li>
+		<li>Dynamic generation of /stocks/(stock) pages.</li>
+		<li>Included dynamic links to dynamically created stock pages on the 'Most Popular Stock' list of the stock page.</li>
+		<li>Implemented trading on dynamically created stock pages.</li>
+	</ul>
+</div>
+
+<div class="release">
+	<span class="date">10/17/15</span>
+	<span class="release_num">Alpha 0.35</span>
+	<ul class="newfeatures">
+		<li>Stock game leaderboards implemented on <a href="/stock">stock</a> page. This is the core concept of the game; champagne for everyone!</li>
+		<li>Indication of user's rank, even if they aren't at the top of the leaderboard.</li>
+		<li>Minor code refactoring, reducing amount writes to database and improving efficiency.</li>
+	</ul>
+</div>
+
+<div class="release">
+	<span class="date">10/16/15</span>
+	<span class="release_num">Alpha 0.32</span>
+	<ul class="newfeatures">
+		<li>Implemented selling capability on user account page.</li>
+		<li>User account page now triggers stock lookups and updates values in stock, portfolio and position tables.</li>
+	</ul>
+</div>
+
+<div class="release">
+	<span class="date">10/15/15</span>
+	<span class="release_num">Alpha 0.3</span>
+	<ul class="newfeatures">
+		
+		<li>Partially implemented trading capability (buying only) on <a href="/user">user</a> page!</li>
+		<li>Now writing most current stock prices and 
+			information to database on every lookup or trade.</li>
+		<li>Some refactoring to fix datatypes to correct types further 
+			upstream in the code.</li>
+		<li>Fixed incorrect datatype assignment for date attributes in certain 
+			database tables.</li>
+		<!-- <li></li> -->
+	</ul>
+</div>
+
+<div class="release">
+	<span class="date">10/14/15</span>
+	<span class="release_num">Alpha 0.23</span>
+	<ul class="newfeatures">
+		<li>Basic session capability, which will allow trades to be tied to users and their portfolios.</li>
+		<li>Navigation bar adapts to recognize logged-in status.</li>
+		<li>Each new user receives $1,000,000  upon registration to use for trading.</li>
+		<li>Basic user dashboard indicating account balance.</li>
+	</ul>
+</div>
+
+<div class="release">
+	<span class="date">10/14/15</span>
+	<span class="release_num">Alpha 0.2</span>
+	<ul class="newfeatures">
+		<li>Improvements to home page, describing project goals.</li>
+		<li>Implemented graceful 404 exception handling.</li>
+		<li>Backend implementation of trade, position and portfolio tables.</li>
+		<li>Enhancements to the <a href="/db_view">development page</a>,  giving a view of the engine behind the application.</li>
+	</ul>
+</div>
+
+<div class="release">
+	<span class="date">10/12/15</span>
+	<span class="release_num">Alpha 0.17</span>
+	<ul class="newfeatures">
+		<li>Added registration page and functionality; instead of only allowing hard-coded "admin/admin" credentials to work, login is database-based.</li>
+		<li>Added "last seen" datetime object to User class.</li>
+		<li>Added User table to database preview page.</li>
+		<li>Added "most popular stock searches" feature on stock page.</li>
+		<li>Added form validation for login, registration and stock search.</li>
+		<li>Added Terms of Service and Privacy Policy</li>
+	</ul>
+</div>
+
+<div class="release">
+	<span class="date">10/11/15</span>
+	<span class="release_num">Alpha 0.14</span>
+	<ul class="newfeatures">
+		<li>Connecteted application to database server. Persistence!</li>
+		<li>Created data model for stock, inserted some data.</li>
+		<li>Converted dates (dividend paydates, e.g.) from strings to python datetime format for entry into database and logic that will come later.
+		<li>Added database preview page (mostly for development purposes.)</li>
+	</ul>
+</div>
+
+<div class="release">
+	<span class="date">10/10/15</span>
+	<span class="release_num">Alpha 0.11</span>
+	<ul class="newfeatures">
+		<li>Added news page with release info.</li>
+		<li>Backend database preperation work.</li>
+		<li>Fixed a bug which caused the server to crash when very long search queries were entered on stock page.</li>
+	</ul>
+</div>
+<div class="release">
+	<span class="date">10/9/15</span>
+	<span class="release_num">Alpha 0.1</span>
+	<ul class="newfeatures">
+		<li>Pushed application to Heroku server.</li>
+		<li>Bug fixes when searching for stocks with 'white space' or non letter characters.</li>
+		<li>Backend logic to determine display style/color of price change on stock page (no JavaScript needed!)</li>
+		<li>Refactored backend structure, simplifying templating for stock information and preparing for entry into database.</li>
+		<li>Auto-focusing on text field on stock search and user login pages.</li>
+		<li>Updates to stylesheet, overriding Bootstrap's form focus styles for user inputs.</li>
+	</ul>
+</div>
+
+{% endblock %}
+
+<!-- <div class="release">
+	<span class="date"></span>
+	<span class="release_num"></span>
+	<ul class="newfeatures">
+		<li></li>
+		<li></li>
+		<li></li>
+	</ul>
+</div>
+ -->

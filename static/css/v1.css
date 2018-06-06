@@ -1,0 +1,149 @@
+.flash {
+  background-color: rgba(0,255,0,.3);
+  padding: 5px 10px;
+  margin-top: 5px;
+  border-radius: 4px;
+}
+.loss {
+  color: red;
+}
+
+.gain {
+  color: green;
+}
+.dashboard {
+  background-color: rgba(204, 204, 255,.2);
+  /*float: left;*/
+  padding: 8px;
+  border-radius: 5px;
+  /*max-width: 630px;*/
+  border:2px solid;
+
+}
+.tableheader {
+  font-weight: bold;
+  background-color: rgba(150,150,155,0.1);
+  width: inherit;
+}
+
+.stocklist tr:not(:last-child) {
+  border-bottom: 1px dotted gray;
+  /*doesn't appear to be working*/
+}
+/*
+.stocklist table {
+    min-width: 500px;
+}*/
+
+.stocklist td {
+  /*padding: 5px 20px 5px 0px;*/
+  padding: 6px 6px;
+  min-width: 100px;
+}
+
+.tradebox {
+  display: inline;
+  max-width: 120px;
+  /*float: right;*/
+  background-color: rgba(210,210,220,.2);
+  border-radius: 5px;
+  padding: 8px;
+  list-style-type: none;
+}
+
+.dashboard h3 {
+  line-height: 0px;
+  padding-bottom: 10px;
+}
+.dashboard table {
+  border-radius: 5px;
+  padding: 5px;
+
+}
+.dashboard td {
+  padding: 5px;
+}
+
+.dashboard tr {
+  border-bottom: 1px dotted gray;
+}
+
+.tradecontrols{
+  max-width: 200px;
+  padding-left: 20px;
+
+}
+
+.stockposition {
+  float: right;
+  position: relative;
+  top: -165px;
+  left: -20px;
+  /*background-color: gray;*/
+}
+
+#leaderboard {
+  display: inline;
+  max-width: 200px;
+  float: right;
+  background-color: rgba(210,210,220,.2);
+  border-radius: 4px;
+  padding: 8px;
+  list-style-type: none;
+  position: relative;
+  top: 85px;
+}
+#leaderboard li {
+  padding: 6px 7px 6px 0;
+}
+
+.db_view td {
+  padding: 10px 5px;
+  width: 110px;
+}
+
+.db_view tr:nth-child(odd)  {
+  background-color: rgba(150,150,155,0.1);
+}
+.relationship {
+  font-family:Menlo,Monaco,Consolas,"Courier New",monospace;
+  color: rgb(190,10,190);
+}
+
+td.relationship {
+  background-color: rgba(190,10,190,.1);
+
+}
+
+#stock table .value {
+  text-align: left;
+  font-weight: bold;
+  min-width: 175px;
+
+}
+#stock table {
+  display: inline-block;
+  min-width: 350px;
+  margin: 0 15px;
+
+}
+#stock tr {
+  border-bottom: 1px dotted gray;
+    min-width: 230px;
+}
+
+#stock td {
+  padding: 3px 0;
+}
+
+.chart {
+
+    max-width:330;
+}
+
+.roul_table { margin:0 auto; }
+.roul_table  td { padding:0; cursor:pointer; text-align:center; border:2px solid #cccc00; width:42px; height:43px; font-size:11px; font-weight:bold; color:white; }
+ul#jetons li {
+
+  display:inline;
+}

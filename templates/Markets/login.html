@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block page_content %}
+
+<h1>Please log in</h1>
+<form action="{{ url_for('login') }}" method="post">
+	{{ form.hidden_tag() }}
+
+	<p>Username or email:
+		{{ form.username(autofocus="autofocus", placeholder="user@email.com") }}
+		Password:
+		{{ form.password }}
+
+	<input type="submit" value="Log in"></p>
+</form>
+
+<h4><a href="/password_reminder">Forgot your password?</a></h4>
+<br>
+
+<h4><a href="/register">Sign up</a> for Wallstreet</h4>
+
+{% endblock %}

@@ -1,0 +1,110 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}{{title}}{% endblock %}
+{% block head %}
+{{ super() }}
+
+<link rel="shortcut icon" href="{{ url_for('static', filename = 'Python.ico') }}"
+    type="image/x-icon">
+<link rel="icon" href="{{ url_for('static', filename = 'Python.ico') }}"
+    type="image/x-icon">
+{% endblock %}
+
+{%- block styles %}
+{{ super() }}
+   <link rel="stylesheet" href="{{ url_for('static', filename = 'css/v1.css') }}">
+{%- endblock styles %}
+
+
+{% block navbar %}
+
+<div class="navbar navbar-inverse" role="navigation">
+    <div class="container">
+
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle"
+             data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Flasky</a>
+        </div>
+        <div class="navbar-collapse collapse navbar-right">
+
+            <ul class="nav navbar-nav">
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                     <li><a href="{{ url_for('about') }}">About</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Apps <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('about') }}">About</a></li>
+                <li><a href="{{ url_for('scraper') }}">Links</a></li>
+                <li><a href="{{ url_for('count') }}">Guess Number</a></li>
+                <li><a href="{{ url_for('yelp') }}">Yelp</a></li>
+                <li><a href="{{ url_for('upload_file') }}">Upload</a></li>
+                <li><a href="{{ url_for('places') }}">Places</a></li>
+                <li class="divider"></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li>
+             {% if not loggedin_user %}
+            <li><a href="/login">Sign in</a></li>
+            <li><a href="/register">Register</a></li>
+            {% endif %}
+            {% if loggedin_user %}
+            <li><a href="{{ url_for('roulette') }}">Roullete</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ loggedin_user }} <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                     <li><a href="/user">{{ loggedin_user }}</a>
+                <ul>
+            <li><a href="/user">Account</a></li>
+            <li><a href="/settings">Settings</a></li>
+            <li><a href="/logout">Log out</a></li>
+            </ul>
+            </li>
+            </ul>
+            </li>
+            {% endif %}
+            </ul>
+
+        </div>
+    </div>
+</div>
+
+<script></script>
+
+
+{% endblock %}
+
+
+
+{% block content %}
+<div class="container">
+
+    <!-- messages-->
+    {% for message in get_flashed_messages() %}
+    <p class="flash">  {{ message }} </p>
+    {% endfor %}
+
+     <!-- errors -->
+    {% if error %}
+    <p class="error">Error: {{ error }}</p>
+    {% endif %}
+
+    <div class="row justify-content-md-center">
+    {% block page_content %}
+
+    {% endblock %}
+    </div>
+</div>
+
+{% endblock %}

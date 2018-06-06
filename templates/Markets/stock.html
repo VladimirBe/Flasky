@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+<h1>{{ title }}</h1>
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="static/css/v1.css">
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+{% endblock %}
+
+
+{% block page_content %}
+
+<div class="dashboard">
+{% if form %}
+	<form action="{{ url_for('stocks') }}" method="post">
+		{{ form.hidden_tag() }}
+		{{ form.stocklookup(size=20, autofocus="autofocus") }}
+		<input type="submit" value="Search">
+	</form>
+{% endif %}
+	<!-- display stock if there is one -->
+{% if stock %}
+	<div id="stock">
+		<div id="summary">
+			<span id="name">{{ stock.name }} ({{ stock.symbol }})</span>
+			<span id="exchange"> - {{ stock.exchange }}</span><br>
+			<span id="price" >{{ stock.prettyprice }}</span>
+			{% if stock.loss %}
+			<span class="loss-summary">{{ stock.change }} ({{ stock.percent_change }})</span><br>
+			{% endif %}
+			{% if not stock.loss %}
+			<span id="change">{{ stock.change }} ({{ stock.percent_change }})</span><br>
+			{% endif %}
+			<span id="afterhours">After hours: {{ stock.afterhours }}</span>
+			<span id="last_traded">Last trade: {{ stock.last_traded }}</span>
+		</div>
+		<div id="chart"> </div>
+		<div>
+			<table>
+				<tr>
+				<td>Prev close:</td><td class="value">${{ stock.prev_close }}</td>
+
+
+					<td>Open:</td><td class="value">${{ stock.open }}</td>
+				</tr>
+				<tr>
+					<td>Bid:</td><td class="value">${{ stock.bid }}</td>
+
+
+					<td>Ask:</td><td class="value">${{ stock.ask }}</td>
+				</tr>
+				<tr>
+					<td>Volume:</td><td class="value">{{ stock.volume }}</td>
+
+					<td>Avg Vol:</td><td class="value">{{ stock.av_volume }}</td>
+				</tr>
+			</table>
+			<table>
+				<tr>
+					<td>Day's Range:</td><td class="value">${{ stock.day_range }}</td>
+
+					<td>52wk Range:</td><td class="value">${{ stock.year_range }}</td>
+				</tr>
+				<tr>
+					<td>Market Cap</td><td class="value">{{ stock.prettymarket_cap }}</td>
+
+					<td>P/E:</td><td class="value">{{ stock.prettyperatio }}</td>
+				</tr>
+				<tr>
+					<td>Div Yield:</td><td class="value">{{ stock.div }}%</td>
+
+					<td>Ex Div:</td><td class="value">{{ stock.prettyex_div }}</td>
+				</tr>
+				<tr>
+					<td>Div Pay Date:</td><td class="value">{{ stock.prettydiv_pay }}</td>
+				</tr>
+
+			</table>
+
+		</div>
+</div>
+
+	<!-- graph stuff
+	<div class=page>
+	  {{ div | safe }}
+	</div>-->
+
+
+    <script type="text/javascript">
+
+        var graphs = {{graphJSON | safe}};
+
+        Plotly.plot('chart',graphs,{});
+
+    </script>
+	{% endif %}
+<br>
+	{% if loggedin_user %}
+	<div class="tradecontrols">
+		<form action="{{ url_for('stock', symbol=stock.symbol) }}" method="post">
+			{{ tradeform.hidden_tag() }}
+			{{ tradeform.amount.label }}
+			{{ tradeform.amount }}
+			{{ tradeform.buy_or_sell }}
+			<input type="submit" value="Trade"></p>
+		</form>
+	 </div>
+		{% if position %}
+		<div class="stockposition">
+			<table>
+				<tr>
+					<td>Shares of {{ position.symbol }} owned: </td>
+					<td>{{ position.prettysharecount }}</td>
+				</tr>
+				<tr>
+					<td>Available cash: </td>
+					<td>{{ user.portfolio.prettycash }}</td>
+				</tr>
+			</table>
+		</div>
+		{% endif %}
+		{% if not position %}
+		<div class="stockposition">
+			<table>
+				<tr>
+					<td>Shares of {{ stock.symbol }} owned:</td>
+					<td>0</td>
+				</tr>
+				<tr>
+					<td>Available cash: </td>
+					<td>{{ user.portfolio.prettycash }}</td>
+				</tr>
+			</table>
+		</div>
+		{% endif %}
+
+	{% endif %}
+</div>
+<div class="col-md-2 col-md-push-9">
+    <div id="leaderboard">
+            	<h4><a href="/leaderboard">Leaders</a></h4>
+            	<ol>
+            		{% for l in leaders %}
+            		<li>{{ l.owner.name }}: <br>
+            			{{ l.prettyvalue }}</li>
+            		{% endfor %}
+            	</ol>
+            	{% if loggedin_user %}
+            	<h5>Your rank: {{ user.rank }}</h5>
+            	{% endif %}
+
+    </div>
+</div>
+
+
+{% endblock %}
+
+

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block page_content %}
+
+<h1>{{ title }}</h1>
+
+<h5>The goal of this project is to make a realistic stock trading game from scratch.</h5>
+<h4>Wall Street game concept:</h4>
+<ul>
+	<li>Upon sign-up, users receive $1 million of play money which can be used to trade stocks or play roulette/casino  within the game.</li>
+	<li>All trades are based on actual market conditions. We track how much you've gained or lost on a particular transaction, pay dividends when applicable, etc.</li>
+	<li>Game leaderboards give you bragging rights for wealthiest, most active, most lucky at roulette/casino and other categories.</li>
+</ul>
+<h4>Here are some features which I'm considering developing:</h4>
+<ul>
+	<li>Machine learning or automated trading.</li>
+	<li>Natural Language Processing to analyze the news related to the stock and output a sentiment analysis and also a corelation between them.</li>
+	<li>Set notification triggers (email, SMS) when stocks reach a specified price.</li>
+	<li>Ability to trade on margin and short sell. Also add Forex trading</li>
+	<li>More advanced graphs/charts (most likely using JavaScript.)</li>
+	<li>Historical stock data lookup.</li>
+	<li>Stats on the most active/best/worst-performing stocks of the day.</li>
+	<li>Links to articles you might be interested in, based on the stocks you look at or own.</li>
+	<li>Resources on how to learn more about the stock market and trading.</li>
+	<li>Possibility to sign in or create an account via Facebook or other social media.</li>
+	<li>Some decent design, maybe some ReactJs.</li>
+	<li><a href="mailto:bejanvadim@yahoo.com?subject=Wall Street feature idea">Let me know</a> if you have other ideas!</li>
+</ul>
+<h5>In the meantime, check out the <a href="/stocks">stock page</a>.</h5>
+
+{% endblock %}

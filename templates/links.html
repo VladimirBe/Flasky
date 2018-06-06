@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>Scraped Links</title>
+</head>
+<body>
+<div>
+    <form method="POST">
+        <p>
+            <label>Your URL: {{ site }}</label>
+        </p>
+    </form>
+</div>
+<div>
+<p>
+    {% for link in links %}
+    <tr>
+        <td>{{ link.text.strip() }}, {{ link.get('href') }}</td><br>
+    </tr>
+    {%  endfor %}
+</p>
+</div>
+<div>
+    <a href="{{ url_for('scraper') }}">Scrape again</a>
+</div>
+</body>
+</html>
+{% endblock %}

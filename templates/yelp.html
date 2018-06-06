@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block head %}
+{{ super() }}
+<!--<link rel="stylesheet" href="static/css/v1.css">-->
+{% endblock %}
+{% block page_content %}
+    <div class="ui-widget">
+      <label for="search_bar">Business Search: </label>
+      <input id="search_bar" style="width: 400px;">
+    </div>
+
+    <div class="ui-widget">
+      Businesses:
+      <div id="businesses" style="height: 400px; width: 600px; overflow: auto; white-space: pre;" class="ui-widget-content" />
+    </div>
+{% endblock %}
+{% block scripts %}
+{{ super() }}
+<link rel="stylesheet" href="/static/css/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+
+<script>
+    var table  =  '<table>';
+    //var $table  =  $('<table></table>');
+    function display_results(businesses) {
+
+        for (var i = businesses.length - 1; i >= 0; i--) {
+            // u2606 is a white star.
+            table += '<tr>'
+	        table += '<td>'
+            table += businesses[i].rating.toFixed(1) + "/5\u2606  ";
+            table+='<td>'
+            table+=businesses[i].name;
+            table += '</td>'
+            table+='<td>'
+            table+=businesses[i].phone+"\n";
+            table += '</td>'
+            table += '</td>'
+	        table += '</tr>'
+	        /* shorter version:
+	            var $tr =  $('<tr></tr>');
+                var $td =  $('<td></td>');
+                $td.append(msg.data[i]);
+                $tr.append($td);
+                $table.append($tr);*/
+        }
+        table  += '</table>';
+        $("#businesses").html(table);
+
+        $("#businesses").scrollTop(0);
+    }
+    $(function() {
+        $("#search_bar").autocomplete({
+            source: "/autocomplete",
+            minLength: 3,
+            select: function(event, ui) {
+                $.ajax({
+                    url: "/business_search",
+                    type: "GET",
+                    data: {
+                        term: ui.item.value
+                    },
+                    success: function(result){
+                        display_results(JSON.parse(result).businesses);
+                    }
+                });
+            }
+        });
+    });
+</script>
+{%- endblock scripts %}

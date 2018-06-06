@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>{{ title }}</h1>
+<h5>Cheesy name, I know. I was on the spot when uploading the app to the server and I had to find a name which wasn't already taken. Maybe I'll change it at some point.</h5>
+<h5>My motivation for building this project is to learn to build an application from end to end using Python, Flask, HTML, CSS, JavaScript, PostgreSQL, SQLAlchemy, object-relational mapping, model-view-controller architecture patterns and other concepts. I'm trying to be pretty thorough in documenting the process; check out the <a href="/news">release log</a> if you're curious. Feel free to <a href="mailto:abmorton@gmail.com">email me</a> if you have questions or suggestions. You can view my code on <a href="https://github.com/abmorton/stockhawk" target="_blank">GitHub</a>. I'm a big believer that helping others learn benefits everyone.</h5>
+<h5>The goal of this project is to make a realistic stock trading game from scratch.</h5>
+<h4>StockHawk trading game concept:</h4>
+<ul>
+	<li>Upon sign-up, users receive $1 million of play money which can be used to trade stocks within the game.</li>
+	<li>All trades are based on actual market conditions. We track how much you've gained or lost on a particular transaction, pay dividends when applicable, etc.</li>
+	<li>Game leaderboards give you bragging rights for wealthiest, most active and other categories.</li>
+</ul>
+<h4>Here are some features which I'm considering developing:</h4>
+<ul>
+	<li>API to allow users to trade with their own applications.</li>
+	<li>Set notification triggers (email, SMS) when stocks reach a specified price.</li>
+	<li>Ability to trade on margin and short sell.</li>
+	<li>Realistic capital gains/income tax liability implications for transactions.</li>
+	<li>More advanced graphs/charts (most likely using JavaScript.)</li>
+	<li>Historical stock data lookup.</li>
+	<li>Stats on the most active/best/worst-performing stocks of the day.</li>
+	<li>Links to articles you might be interested in, based on the stocks you look at or own.</li>
+	<li>Resources on how to learn more about the stock market and trading.</li>
+	<li>Possibility to sign in or create an account via Facebook or other social media.</li>
+	<li>Private messaging.</li>
+	<li>"Follower" relationships and other social interactions.</li>
+	<li>Some decent design, including a logo.</li>
+	<li>User avatars.</li>
+	<li><a href="mailto:abmorton@gmail.com?subject=StockHawk feature idea">Let me know</a> if you have other ideas!</li>
+</ul>
+<h5>In the meantime, check out the <a href="/stocks">stock page</a>.</h5>
+
+{% endblock %}

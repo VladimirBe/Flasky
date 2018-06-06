@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ title }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href={{ url_for('static', filename='bootstrap.min.css') }} rel="stylesheet" media="screen">
+  </head>
+  <body>
+    <header>
+      <div id="headercontainer">
+        <span id="stockhawk"><a href="/stocks">Markets</a></span>
+          <ul>
+            <li><a href="/about">About</a>
+              <ul>
+                  <li><a href="/news">Releases</a></li>
+                  <li><a href="/db_view">Backend</a></li>
+                  <li><a href="/aboutadam" target="_blank">My story</a></li>
+              </ul>
+            </li>
+            {% if not loggedin_user %}
+            <li><a href="/login">Sign in</a>
+                <ul>
+                    <li><a href="/register">Register</a></li>
+                </ul>
+            </li>
+            {% endif %}
+            {% if loggedin_user %}
+            <li><a href="/user">{{ loggedin_user }}</a>
+              <ul>
+                <li><a href="/user">Account</a></li>
+                <li><a href="/settings">Settings</a></li>
+                <li><a href="/logout">Log out</a></li>
+              </ul>
+            </li>
+            {% endif %}
+          </ul>
+      </div>
+    </header>
+    <div class="container">
+      <!-- messages -->
+      {% for message in get_flashed_messages() %}
+      <p class="flash">  {{ message }} </p>
+      {% endfor %}
+
+      <!-- errors -->
+      {% if error %}
+        <p class="error">Error: {{ error }}</p>
+      {% endif %}
+
+      <!-- child template -->
+      {% block content %}{% endblock %}
+    </div>
+  </body>
+</html>

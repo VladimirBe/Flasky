@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+<h1>{{ title }}</h1>
+
+<!--{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{ url_for('static', filename = 'css/v1.css') }}">
+{% endblock %}-->
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="static/css/v1.css">
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+{% endblock %}
+
+{% block page_content %}
+
+
+<div class="dashboard">
+<h3>Positions dashboard</h3>
+<table>
+
+	<tr>
+		<td class="tableheader">Stock</td>
+		<td class="tableheader">Shares</td>
+		<td class="tableheader">Value</td>
+		<td class="tableheader">Cost basis</td>
+		<td class="tableheader">Gain(Loss)</td>
+		<td class="tableheader">G/L %</td>
+		<td class="tableheader">G/L Day</td>
+		<td class="tableheader">Trade</td>
+	</tr>
+	{% for position in positions %}
+	<tr class="stocklist">
+		<td><a href="{{ url_for('stock', symbol=position.symbol) }}">{{ position.symbol }}</a></td>
+		<td>{{ position.prettysharecount }}</td>
+		<td>{{ position.prettyvalue }}</td>
+		<td>{{ position.prettycost }}</td>
+	{% if position.loss %}
+		<td class="loss">{{ position.prettygain_loss }}</td>
+		<td class="loss">{{ position.prettygain_loss_percent }}</td>
+		{% if position.daily_gain_loss %}
+		<td class="loss">{{ position.prettydaily_gain }}</td>
+		{% endif %}
+		{% if not position.daily_gain_loss %}
+		<td class="gain">{{ position.prettydaily_gain }}</td>
+		{% endif %}
+	{% endif %}
+	{% if not position.loss %}
+		<td class="gain">{{ position.prettygain_loss }}</td>
+		<td class="gain">{{ position.prettygain_loss_percent }}</td>
+		{% if position.daily_gain_loss %}
+		<td class="loss">{{ position.prettydaily_gain }}</td>
+		{% endif %}
+		{% if not position.daily_gain_loss %}
+		<td class="gain">{{ position.prettydaily_gain }}</td>
+		{% endif %}
+	{% endif %}
+	<td ><input type="button" id="{{ position.symbol }}" value="Buy/Sell" onclick="show('{{ position.symbol }}1'); hide('{{ position.symbol }}');"></input>
+	<div id="{{ position.symbol }}1" style="display:none;">
+	<input type="text"name="{{ position.symbol }}" id="share_amount" placeholder="Amount of shares" value="">
+	<input type="radio" name="r" id="BuySell" value="Buy"> Buy
+	<input type="radio" name="r" id="BuySell" value="Sell"> Sell
+	<input type="submit" onclick="trade_stock({{ position.symbol }})">
+	</div>
+
+	</td>
+	</tr>
+	{% endfor %}
+	<tr class="tableheader">
+		<td>Total</td>
+		<td></td>
+		<td>{{ portfolio.prettytotal_stock_value }}</td>
+		<td>{{ portfolio.prettytotal_cost }}</td>
+		{% if portfolio.loss %}
+			<td class="loss">{{ portfolio.prettytotal_gain_loss }}</td>
+			<td class="loss">{{ portfolio.prettytotal_gain_loss_percent }}</td>
+		{% endif %}
+		{% if not portfolio.loss %}
+			<td class="gain">{{ portfolio.prettytotal_gain_loss }}</td>
+			<td class="gain">{{ portfolio.prettytotal_gain_loss_percent }}</td>
+		{% endif %}
+		{% if portfolio.daily_gain_loss %}
+		<td class="loss">{{ portfolio.prettydaily_gain }}</td>
+		{% endif %}
+		{% if not portfolio.daily_gain_loss %}
+		<td class="gain">{{ portfolio.prettydaily_gain }}</td>
+		{% endif %}
+	</tr>
+	<tr>
+		<td>Cash available: </td>
+		<td>{{ portfolio.prettycash }}</td>
+		<td></td>
+		<td>Account value: </td>
+		<td>{{ portfolio.prettyvalue }}</td>
+	</tr>
+</table>
+</div>
+
+<div class="tradebox">
+	<h4>Make a trade</h4>
+	{% from "/Markets/_formhelpers.html" import render_field %}
+	<form action="{{ url_for('user') }}" method="post">
+		{{ form.hidden_tag() }}
+
+		{{ render_field(form.symbol) }}
+		{{ render_field(form.share_amount) }}
+		{{ render_field(form.buy_or_sell) }}
+		<input type="submit" value="Trade"></p>
+	</form>
+</div>
+
+
+<!-- graph stuff -->
+<div id="pie" d3pie="0.2.1" style="margin: auto; text-align: center;">
+  <script>
+    var data = {{ graph_values|safe }};
+    layout = {{ layout|safe }};
+    Plotly.newPlot('pie', data, layout);
+  </script>
+</div>
+<!-- <span id="position_pie_legend"><ul>
+	{% for position in positions %}
+		<li>{{ position.symbol }}</li>
+	{% endfor %}
+</ul>
+</span>
+ -->{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type=text/javascript>
+  $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+</script>
+<script>
+  function show (toBlock){
+    setDisplay(toBlock, 'block');
+  }
+  function hide (toNone) {
+    setDisplay(toNone, 'none');
+  }
+  function setDisplay (target, str) {
+    document.getElementById(target).style.display = str;
+  }
+
+var  myJSON, text, obj,z;
+var myObj=[];
+
+function trade_stock(str){
+    var symb=str.id;
+    var amount=$("input[name='"+symb+"']").val();
+    var bs=$("input[name='r']:checked").val();
+    myObj.push({symb:symb,amount:amount,bs:bs});
+    myJSON = JSON.stringify(myObj);
+    localStorage.setItem("testJSON", myJSON);
+    text = localStorage.getItem("testJSON");
+
+    alert(amount);
+    alert(bs);
+    alert(symb);
+    $.getJSON('/usertest',{
+
+        a:text,
+
+    }
+
+        )
+
+
+    /*$.post("/user",
+        {
+    symb:symb,
+    amount:amount,
+    bs:bs,
+});*/
+
+}
+
+//function for allowing only numbers to be enterred
+$('input[id="share_amount"]').keyup(function(e)
+                                {
+  if (/\D/g.test(this.value))
+  {
+    // Filter non-digits from input value.
+    this.value = this.value.replace(/\D/g, '');
+  }
+});
+
+// function to autocheck Buy
+
+$('input[id="BuySell"]').filter('[value="Buy"]').attr('checked', true);
+</script>
+{% endblock %}

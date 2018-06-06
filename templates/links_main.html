@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block page_content %}
+
+<h1>Enter your URL that you want to scrape.</h1>
+<p>Enter the URL in the format <i>www.example.com</i> with no leading http:// or trailing slash.</p>
+<form method="POST">
+    <div>
+        <p>
+            <label>
+                URL:
+                <input type="text" size="30" name="myUrl" placeholder="www.example.com">
+                <input type="submit" value="Scrape it!">
+            </label>
+        </p>
+    </div>
+</form>
+{% endblock %}
