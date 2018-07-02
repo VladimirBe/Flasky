@@ -41,7 +41,7 @@
                      <li><a href="{{ url_for('about') }}">About</a></li>
                 </ul>
             </li>
-            <li class="dropdown">
+            <!--<li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Apps <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="{{ url_for('home') }}">Home</a></li>
@@ -54,13 +54,14 @@
                 <li class="divider"></li>
                 <li><a href="#">One more separated link</a></li>
               </ul>
-            </li>
+            </li>-->
              {% if not loggedin_user %}
             <li><a href="/login">Sign in</a></li>
             <li><a href="/register">Register</a></li>
             {% endif %}
             {% if loggedin_user %}
             <li><a href="{{ url_for('roulette') }}">Roullete</a></li>
+            <li><a href="{{ url_for('pit') }}">Trade pit</a></li>
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ loggedin_user }} <b class="caret"></b></a>
                 <ul class="dropdown-menu">

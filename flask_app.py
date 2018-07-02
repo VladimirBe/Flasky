@@ -1143,16 +1143,9 @@ def db_view():
 def aboutadam():
 	return render_template('/Markets/about.html')
 
-@app.route('/tos')
-def tos():
-	return render_template('/Markets/tos.html')
-
-@app.route('/news')
-@login_reminder
-def news():
-	title = 'Release log'
-	user = get_user()
-	return render_template('/Markets/news.html', title=title, loggedin_user=user)
+@app.route('/terms')
+def terms():
+	return render_template('/Markets/terms.html')
 
 @app.route('/leaderboard')
 @login_reminder
@@ -1196,7 +1189,15 @@ def user():
 		# stock = Share(clean_stock_search(form.symbol.data))
 		share_amount = form.share_amount.data
 		buy_or_sell = form.buy_or_sell.data
-		if stock.get_price() == None:
+		try:
+		    trade(stock, share_amount, buy_or_sell, user, portfolio, positions)
+		    return redirect(url_for('user'))
+		except :
+		    flash("Couldn't find stock matching "+form.symbol.data.upper()+". Try another symbol.")
+		    return redirect(url_for('user'))
+
+	"""
+			if stock.get_price() == None:
 			# If it's POST and valid, but there's no such stock
 			flash("Couldn't find stock matching "+form.symbol.data.upper()+". Try another symbol.")
 			return redirect(url_for('user'))
@@ -1207,6 +1208,9 @@ def user():
 	elif request.method == 'POST' and not form.validate():
 		flash('Invalid values. Please try again.')
 		return redirect(url_for('user'))
+
+	"""
+
 
 @app.route('/settings', methods=['GET', 'POST'])
 @login_required
@@ -1417,6 +1421,7 @@ def spin():
             d[i["bet_on"]]+=int(i["amount"])
         else:
             d[i["bet_on"]]=int(i["amount"])
+
     amount_won=0
     amount_bet=0
     loggedin_user = get_user()
@@ -1432,7 +1437,52 @@ def spin():
             amount_won+=d[key]*multiplier[key]
     cash= user.portfolio.cash
     new_cash=pretty_numbers(cash-amount_bet+amount_won)
-    #user.portfolio.cash=new_cash
-    #db.session.commit()
+    user.portfolio.cash=new_cash
+    db.session.commit()
 
     return jsonify(result=ball_land_on,new_cash=new_cash,amount_won=amount_won,amount_bet=amount_bet)
+
+@app.route('/pit', methods=['GET', 'POST'])
+@login_reminder
+def pit():
+	title = 'Trade Pit'
+	stock = None
+	loggedin_user = get_user()
+	user, allplayers, leaders = get_leaderboard(loggedin_user)
+	form = StockSearchForm(request.form)
+	tradeform = TradeForm(request.form)
+	stocks = Stock.query.order_by(desc(Stock.view_count)).limit(10).all()
+	if request.method == 'POST':
+		if form.validate():
+			stock = get_Share(form.stocklookup.data)
+			# stock = Share(clean_stock_search(form.stocklookup.data))
+			if stock.get_quote(filter_="open")['open'] == None:
+			# company lookup goes here
+				company_results = search_company(form.stocklookup.data)
+				stock = None
+				if len(company_results) == 0:
+					flash("Couldn't find symbol or company matching "+form.stocklookup.data.upper()+". Try searching for something else.")
+				else:
+					flash("Didn't find that symbol, but found " + str(len(company_results)) +" matching company names:")
+
+				return render_template('/Markets/stocks.html', stock=stock, form=form, stocks=stocks, leaders=leaders, user=user, loggedin_user=loggedin_user, results=company_results)
+			else:
+				# There is a stock with this symbol, serve the dynamic page
+				stock = set_stock_data(stock)
+				# Some stocks appear to not have company names
+				if stock.name != None:
+					title = stock.symbol+" - "+stock.name
+				else:
+					title = stock.symbol+" - Unnamed company"
+				write_stock_to_db(stock)
+				return redirect(url_for('stock', symbol=stock.symbol))
+		elif not form.validate():
+			flash("Please enter a stock.")
+			return redirect(url_for('stocks'))
+		return render_template('/Markets/stocks.html', form=form, tradeform=tradeform, stock=stock, leaders=leaders, title=title, user=user, loggedin_user=loggedin_user)
+	elif request.method == 'GET':
+		for s in stocks:
+			s.prettyprice = pretty_numbers(s.price)
+			s.prettymarket_cap=pretty_large(int(s.market_cap))
+		return render_template('/Markets/stocks.html', form=form, tradeform=tradeform, stock=stock, stocks=stocks, leaders=leaders, title=title, user=user, loggedin_user=loggedin_user)
+

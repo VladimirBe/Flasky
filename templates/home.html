@@ -6,13 +6,14 @@
     <div class="col-sm-8">
 <h1>Hello, {% if loggedin_user %}{{ loggedin_user }}{% else %}Stranger{% endif %}</h1>
 
-<h5>This platform is mostly for testing purpose of apps&scripts I work on, objective is to learn to build applications from end to end using Python, Flask, HTML, CSS, JavaScript, PostgreSQL, SQLAlchemy, object-relational mapping, model-view-controller architecture patterns and other concepts</h5>
+<h5>This platform is mostly for testing purpose of apps&scripts I work on, objective is to learn to build applications from end to end using Python, Flask, HTML, CSS, JavaScript, PostgreSQL, SQLAlchemy, object-relational mapping, model-view-controller architecture patterns and other concepts. Not least , Machine Learning and NLP</h5>
 </br>
-<h5> The main app I work now is <a href="{{ url_for('stocks') }}">Oligarh game</a> , buy and sell real stocks, play casino (roulette- this one I like the most :)), bet on sports and compete with other players. More about the game you can find on <a href="{{ url_for('about') }}">About page</a> After will finish with bugs,cleaning and design will deploy it separately on Heorku most probably</h5>
+<h5> The main app I work now in Flask is <a href="{{ url_for('stocks') }}">Oligarh game</a> , what would you do with one million dollars : buy and sell real stocks, play casino (roulette- this one I like the most :)), bet on sports and compete with other players. More about the game you can find on <a href="{{ url_for('about') }}">About page</a> After will finish with bugs,cleaning and design will deploy it separately on Heorku most probably</h5>
 <h5>Main activities and challenges for now:</h5>
 <ul>
-    <li>Prettifying data from iexfinance API , adding some functions for that, data is also incomplete, for some stocks the dividend date/pay are missing. </li>
-    <li>Changing front-end things to more interactive with javascript and jQuery </li>
+    <li> Trading pit where you can find top gainers and losers of the day </li>
+    <li> ML for predicting stocks </li>
+    <li>Changing front-end stuff to more interactive with javascript and jQuery </li>
     <li>Charts, building some functions to represent the data in Plotly</li>
     <li>Organizing the app, since beginning of my study I’ve been building everything in one python file :), now cleaning, arranging functions and apps in files,  commenting , trying to make the work readable, because in some places even I have to understand what I've wrote in past :)</li>
     <li>Front end,  CSS</li>

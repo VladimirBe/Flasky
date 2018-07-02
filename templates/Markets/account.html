@@ -29,6 +29,7 @@
 		<td class="tableheader">G/L %</td>
 		<td class="tableheader">G/L Day</td>
 		<td class="tableheader">Trade</td>
+		<td class="tableheader">Sell all shares</td>
 	</tr>
 	{% for position in positions %}
 	<tr class="stocklist">
@@ -65,6 +66,7 @@
 	</div>
 
 	</td>
+	<td><input type="submit" value="Sell All" onclick="trade_stock({{ position.symbol }})"></td>
 	</tr>
 	{% endfor %}
 	<tr class="tableheader">

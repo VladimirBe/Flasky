@@ -70,13 +70,14 @@
 
     {{ rulform.jetons }}
 </form>
-<input type="button" id="button3" value="Clear Bets" onclick="clear_bets();"></input>
-<div id="Bets"></div>
-
-
+<div style="float: left;">
+<div id="Bets" ></div>
 <span id=result></span>
 <p>Your ballance :<span id=result2></span></p>
 <input type="button" id=spinr value="Spin the roulette"></input>
+<input type="button" id="button3" value="Clear Bets" onclick="clear_bets();"></input>
+</div>
+<span id="SpinHistory" style="float: right;"></span>
 
 
 {% endblock %}
@@ -134,7 +135,7 @@ myJSON={};
 myObj=[];
 text='';
 }
-
+var n="<hr/>";
 $(function() {
     $('input#spinr').off().on('click', function() {
         if($.isEmptyObject(text)){
@@ -150,9 +151,10 @@ $(function() {
 
      z += "<tr> <td> Ball landed on  "  +" <span style='background:"+still+"; color:white;border:2px solid #cccc00';>" + data.result+"</span> </td><td> Amount bet <strong>"+data.amount_bet+"</strong></td><td> Amount won <strong>"+data.amount_won +"</strong></td><td> Amount adjusted <strong>"+(data.amount_won - data.amount_bet) +"</strong></td></tr><br/>";
         document.getElementById("result").innerHTML = z;
+        n+="<tr> <td>  <span style='background:"+still+"; color:white;border:2px solid #cccc00';>" + data.result+"</span> </td><td>";
+        document.getElementById("SpinHistory").innerHTML = n;
 
         $("#result2").text(data.new_cash);
-
         text='';
         myJSON={};
         myObj=[];
@@ -163,5 +165,6 @@ $(function() {
 };
     });
   });
+
 </script>
 {% endblock %}
